@@ -11,7 +11,8 @@ function whatIsCircular (obj) {
 }
 
 function _dfs (obj, parents = [], parentKeys = []) {
-  let circular = [];
+  parents.push(obj)
+  let circular = []
   // recurse depth-first until we hit something we've seen before
   for (const key in obj) {
     const val = obj[key]
