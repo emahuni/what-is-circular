@@ -1,6 +1,6 @@
 {
   "name": "whats-circular",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Like what-is-circular, but returns the paths to the all circular references found, and directly to the offending key.",
   "main": "index.js",
   "repository": "git@github.com:emahuni/whats-circular.git",
