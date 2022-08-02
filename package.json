@@ -1,10 +1,11 @@
 {
-  "name": "what-is-circular",
-  "version": "1.0.1",
-  "description": "Like is-circular, but returns the path to the first circular reference found.",
+  "name": "whats-circular",
+  "version": "2.0.1",
+  "description": "Like what-is-circular, but returns the paths to the all circular references found, and directly to the offending key.",
   "main": "index.js",
-  "repository": "git@github.com:flotwig/what-is-circular.git",
+  "repository": "git@github.com:emahuni/whats-circular.git",
   "author": "Zach Bloomquist <github@chary.us>",
+  "contributors": "Emmanuel Mahuni <emahuni@gmail.com>"
   "license": "MIT",
   "private": false,
   "dependencies": {
