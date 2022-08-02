@@ -8,20 +8,20 @@ describe('what-is-circular', function () {
   it('should return path for circular objects', function () {
     var x = {}
     x.cyclic = { a: 1, x: x }
-    expect(whatIsCircular(x)).toEqual(['cyclic', 'x'])
+    expect(whatIsCircular(x)).toEqual([['cyclic', 'x', 'cyclic']])
   })
 
   it('should return path for circular objects', function () {
     var x = {}
     x.cyclic = { a: {}, x: x }
-    expect(whatIsCircular(x)).toEqual(['cyclic', 'x'])
+    expect(whatIsCircular(x)).toEqual([['cyclic', 'x', 'cyclic']])
 
   })
 
   it('should return path for circular objects', function () {
     var x = {}
     x.cyclic = { a: {}, indirect: { x: x } }
-    expect(whatIsCircular(x)).toEqual(['cyclic', 'indirect', 'x'])
+    expect(whatIsCircular(x)).toEqual([['cyclic', 'indirect', 'x', 'cyclic']])
   })
 
   it('should return path for circular objects', function () {
@@ -42,7 +42,29 @@ describe('what-is-circular', function () {
 
     a.b.c.d.e = a
 
-    expect(whatIsCircular(a)).toEqual(['b', 'c', 'd', 'e'])
+    expect(whatIsCircular(a)).toEqual([['b', 'c', 'd', 'e']])
+  })
+
+  it('should return paths for circular objects', function () {
+    a = {
+      a: false,
+      b: {
+        a: false,
+        c: {
+          a: false,
+          d: {
+            e: {
+              a: false
+            }
+          }
+        }
+      }
+    }
+
+    a.b.c.d.e = a
+    a.b.c.a = c
+
+    expect(whatIsCircular(a)).toEqual([['b', 'c', 'a'],['b', 'c', 'd', 'e']])
   })
 
   it('should return path for circular objects', function () {
@@ -67,7 +89,7 @@ describe('what-is-circular', function () {
       x
     }
 
-    expect(whatIsCircular(x)).toEqual(['c', 'x'])
+    expect(whatIsCircular(x)).toEqual([['c', 'x']])
   })
 
   it('should return path for circular objects in arrays', function () {
@@ -90,7 +112,7 @@ describe('what-is-circular', function () {
 
     x.a[2] = x
 
-    expect(whatIsCircular(x)).toEqual(['a', '2'])
+    expect(whatIsCircular(x)).toEqual([['a', '2']])
   })
 
   it('should return undefined for non-circular objects', function () {
@@ -129,17 +151,17 @@ describe('what-is-circular', function () {
   it('detects circular objects and returns path', function() {
     var obj1 = {}
     obj1.x = obj1
-    expect(whatIsCircular(obj1)).toEqual(['x'])
+    expect(whatIsCircular(obj1)).toEqual([['x']])
 
     var obj2 = {}
     obj2.x = {y: obj2}
-    expect(whatIsCircular(obj2)).toEqual(['x', 'y'])
+    expect(whatIsCircular(obj2)).toEqual([['x', 'y']])
   })
 
   it('detects circular arrays and returns path', function() {
     var obj1 = []
     obj1.push(obj1)
-    expect(whatIsCircular(obj1)).toEqual(['0'])
+    expect(whatIsCircular(obj1)).toEqual([['0']])
   })
 
   it('detects non-circular objects and returns undefined', function() {
@@ -175,6 +197,6 @@ describe('what-is-circular', function () {
         f
       }
     }
-    expect(whatIsCircular(f)).toEqual(['x', 'y', 'f'])
+    expect(whatIsCircular(f)).toEqual([['x', 'y', 'f']])
   })
 })
