@@ -1,6 +1,6 @@
-# what-is-circular [![Build Status](https://travis-ci.org/flotwig/what-is-circular.svg?branch=master)](https://travis-ci.org/flotwig/what-is-circular)
+# whats-circular [![Build Status](https://travis-ci.org/emahuni/whats-circular.svg?branch=master)](https://travis-ci.org/emahuni/whats-circular)
 
-Like [`what-is-circular`](https://github.com/flotwig/what-is-circular), but returns the paths to the all circular references found, and directly to the offending key.
+Like [`what-is-circular`](https://github.com/emahuni/whats-circular), but returns the paths to the all circular references found, and directly to the offending key.
 
 # Installation
 
@@ -26,7 +26,28 @@ circularObj.qux = {
   baz: circularObj
 }
 
-whatsCircular(circularObj) // ['qux', 'baz']
+whatsCircular(circularObj) // [['qux', 'baz']]
+
+// multiple circular references
+var a = {
+  a: false,
+  b: {
+    a: false,
+    c: {
+      a: false,
+      d: {
+        e: {
+          a: false
+        }
+      }
+    }
+  }
+}
+
+a.b.c.d.e = a
+a.b.c.f = a.b.c
+
+whatsCircular(a) //[['b', 'c', 'd', 'e'],['b', 'c', 'f']]
 
 var obj = {
   foo: 1,
@@ -42,7 +63,7 @@ MIT
 
 # Thanks
 
-Thanks to @flotwig's [`what-is-circular`](https://github.com/flotwig/what-is-circular/) for the base project implementation.
+Thanks to @flotwig's [`https://github.com/flotwig/what-is-circular/`](https://github.com/flotwig/what-is-circular/) for the base project implementation.
 
 Thanks to @tjmehta's [`is-circular`](https://github.com/tjmehta/is-circular/) for providing the tests and README for this project.
 
