@@ -9,6 +9,7 @@
   "private": false,
   "dependencies": {
     "lodash.includes": "^4.3.0",
+    "lodash.isempty": "^4.4.0",
     "lodash.isobject": "^3.0.2"
   },
   "devDependencies": {

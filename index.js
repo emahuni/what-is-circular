@@ -1,5 +1,6 @@
 const isObject = require('lodash.isobject')
 const includes = require('lodash.includes')
+const isEmpty = require('lodash.isempty')
 
 function whatIsCircular (obj) {
   if (!isObject(obj)) {
@@ -10,7 +11,7 @@ function whatIsCircular (obj) {
 }
 
 function _dfs (obj, parents = [], parentKeys = []) {
-  const circular = [];
+  let circular = [];
   // recurse depth-first until we hit something we've seen before
   for (const key in obj) {
     const val = obj[key]
@@ -23,10 +24,10 @@ function _dfs (obj, parents = [], parentKeys = []) {
 
       const path = _dfs(val, parents.concat([val]), parentKeys.concat([key]))
 
-      if (path) circular.push (path)
+      if (path) circular = circular.concat (path)
     }
   }
-  if(circular) return circular
+  if(!isEmpty(circular)) return circular
 }
 
 module.exports = whatIsCircular
